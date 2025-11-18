@@ -15,6 +15,7 @@ MIA Project: The guide to run exp as below:
 2. $ python prepare_data.py
 ========================================================================
 # B. FINE TUNING - small model & RUN THE EXP:
+(Before tuning try running `pip install 'accelerate>=0.26.0' `  )
 1. $ python fine_tune_cpu.py
 2. $ pip install tqdm
 3. $ pip install pandas scikit-learn matplotlib seaborn
