@@ -73,3 +73,42 @@ MIA Project: The guide to run exp as below:
 
 6. $ python analyze_data_medium.py
 ==========================================================================
+
+# Hardware Side-Channel Forensic Analysis: Detecting Copyrighted Data in LLMs
+
+This project demonstrates a hardware side-channel attack (using `perf stat`) to determine if a Large Language Model (LLM) was trained on specific copyrighted data. We use a **10,000-sample fine-tuned GPT-2 Medium** model as our test subject and "Books3" (pirated books) as our suspect dataset.
+
+## 📂 Required Scripts List
+Ensure the following scripts are present in the root of your repository:
+1. `fine_tune_cpu_medium.py` (Configured for 10k samples)
+2. `collect_data.py` (Generic single-prompt collector)
+3. `collect_suspect_books3.py` (Downloads suspect text snippets)
+4. `collect_evidence.py` (Profiles a list of prompts from a file)
+5. `forensic_finetuned_analysis.py` (Analyzes the Fine-Tuned Model behavior)
+6. `validate_pretraining_plots.py` (Analyzes the Base Model Control behavior)
+
+---
+
+## 🚀 Phase 1: Environment & Setup
+
+Activate the Python virtual environment and ensure dependencies are installed.
+
+```bash
+# Activate Virtual Environment
+source .venv/bin/activate
+
+# Install Dependencies
+pip install torch transformers datasets pandas scikit-learn matplotlib seaborn tabulate
+```
+---
+
+## 🏗 Phase 2: Fine-Tuning the "Witness" Model
+We fine-tune gpt2-medium on 10,000 samples of Python code. This creates a strong "Member" signal in the hardware (cache/pipeline) that we can use as a reference.
+
+### Step 1: Run the Training
+
+```bash
+python fine_tune_cpu_medium.py
+```
+Output: A new folder ./gpt2-medium-finetuned-python containing the model.
+Note: This process takes several hours on a CPU.
