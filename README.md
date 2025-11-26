@@ -83,9 +83,9 @@ Ensure the following scripts are present in the root of your repository:
 1. `fine_tune_cpu_medium.py` (Configured for 10k samples)
 2. `collect_data.py` (Generic single-prompt collector)
 3. `collect_suspect_books3.py` (Downloads suspect text snippets)
-4. `collect_evidence.py` (Profiles a list of prompts from a file)
-5. `final_random_forest.py` (Analyzes the Fine-Tuned Model behavior)
-6. `validate_pretraining.py` (Analyzes the Base Model Control behavior)
+4. `collect_evidence_data.py` (Profiles a list of prompts from a file)
+5. `random_forest_finetuned.py` (Analyzes the Fine-Tuned Model behavior)
+6. `random_forest_basemodel.py` (Analyzes the Base Model Control behavior)
 
 ---
 
@@ -101,7 +101,7 @@ source .venv/bin/activate
 pip install torch transformers datasets pandas scikit-learn matplotlib seaborn tabulate
 ```
 ---
-**Note:** 
+- **Note:** 
     - BELOW processes (some or ALL) takes longer time on a CPU. **Better use a `tmux` session.**
     - While running anyone of the scripts in below secitons, some error related to outdated hugging face lib may occur. It will be resolved using GPT help.
 
@@ -167,12 +167,12 @@ python collect_evidence.py \
 This script uses a Random Forest to classify the Books3 traces as "Guilty" or "Innocent."
 
 ```bash
-python forensic_finetuned_analysis.py
+python random_forest_finetuned.py
 ```
 
 - Outputs:
-    - `finetuned_forensic_boxplots.png`
-    - `finetuned_forensic_violinplots.png`
+    - `GPT_finetuned_boxplots.png`
+    - `GPT_finetuned_violinplots.png`
     - Terminal Result: "Suspect Detection Rate" (e.g., 100%).
 
 ---
@@ -194,12 +194,12 @@ python collect_evidence.py \
 This compares the Base Model's reaction against the known "Guilty" profile.
 
 ```bash
-python validate_pretraining_plots.py
+python random_forest_basemodel.py
 ```
 
 - Outputs:
-    - `validation_boxplots.png`
-    - `validation_violinplots.png`
+    - `GPT_base_boxplots.png`
+    - `GPT_base_violinplots.png`
     - Terminal Result: "Base Model Similarity to Guilty Profile."
 
 ---

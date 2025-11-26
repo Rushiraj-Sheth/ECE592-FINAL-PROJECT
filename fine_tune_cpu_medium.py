@@ -48,7 +48,7 @@ def main():
         tokenize_function, 
         batched=True, 
         remove_columns=dataset.column_names
-    ).shuffle(seed=42).select(range(2000)) 
+    ).shuffle(seed=42).select(range(10000)) 
 
     print(f"Using a subset of {len(tokenized_dataset)} samples for CPU training.")
 
