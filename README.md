@@ -101,7 +101,9 @@ source .venv/bin/activate
 pip install torch transformers datasets pandas scikit-learn matplotlib seaborn tabulate
 ```
 ---
-Note: BELOW processes (some or ALL) takes longer time on a CPU. **Better use a `tmux` session.**
+**Note:** 
+    - BELOW processes (some or ALL) takes longer time on a CPU. **Better use a `tmux` session.**
+    - While running anyone of the scripts in below secitons, some error related to outdated hugging face lib may occur. It will be resolved using GPT help.
 
 ## Phase 2: Fine-Tuning the "Witness" Model
 We fine-tune gpt2-medium on 10,000 samples of Python code. This creates a strong "Member" signal in the hardware (cache/pipeline) that we can use as a reference.
