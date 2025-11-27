@@ -111,7 +111,7 @@ If Phase 4 shows a 100% detection rate, we must verify if this is due to our fin
 We record the hardware traces while the raw `gpt2-medium` reads the books.
 
 ```bash
-python collect_evidence.py \
+python collect_evidence_data.py \
     --model_path "gpt2-medium" \
     --prompts_file "suspect_prompts_books3.txt" \
     --output_csv "evidence_base_model_books3.csv"
