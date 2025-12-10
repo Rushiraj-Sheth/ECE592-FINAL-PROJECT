@@ -1,110 +1,5 @@
-# ECE592: FINAL PROJECT REAMDME; TEAM#10
----
+# Phase B — Gibberish Membership Inference Pipeline
 
-# Phase A â€” Books3 Membership Inference Pipeline
-
-This document describes the exact sequence of scripts required to run the Books3
-membershipâ€‘inference experiment.
-
----
-
-## 1. Required Files
-
-Environment & Setup:
-Activate the Python virtual environment and ensure dependencies are installed.
-
-```bash
-# Activate Virtual Environment OR setup a virt env...
-source .venv/bin/activate
-
-# Install Dependencies
-pip install torch transformers datasets pandas scikit-learn matplotlib seaborn tabulate
-
-OR
-
-pip install -r requirements.txt
-```
-
-Place the following scripts in the project root:
-
-- `fine_tune_books3.py`
-- `collect_books3_members.py`
-- `save_books3_members.py`
-- `collect_books3_nonmembers.py`
-- `infer_cpu_clean.py`
-- `collect_performance_books3.py`
-- `rf_books3_membership.py`
-
-Ensure Books3 dataset files are available in the expected paths used by the scripts.
-
----
-
-## 2. Stepâ€‘byâ€‘Step Execution
-
-### **Step 1 â€” Fineâ€‘tune the Model on Books3**
-
-```bash
-python3 fine_tune_books3.py
-```
-
----
-
-### **Step 2 â€” Save Books3 members used in finetuning**
-```bash
-python3 save_books3_members.py
-```
-This will genreate `books3_members_train.txt`
-
-
----
-
-### **STEP 3 â€” Build the Books3 Nonâ€‘Member Set (B_nonmember)**
-```bash
-python3 collect_books3_nonmembers.py
-```
-This will genreate `books3_nonmembers.txt`
-
----
-
-### **STEP 4 â€” Prepare Perfâ€‘Ready Prompt Files for Profiling**
-Now, we can collect perf counters readings for member and non-member data using `collect_performance_books3.py` script
-
-FOR COLLECTING MEMBER PERF DATA
-```bash
-python collect_performance_books3.py \
-    --model_path gpt2-medium-finetuned-books3 \
-    --input_file books3_members_train.txt \
-    --output_csv books3_member_perf.csv \
-    --max_prompts 400
-
-```
-
-FOR COLLECTING NON-MEMBER PERF DATA
-```bash
-python collect_performance_books3.py \
-    --model_path gpt2-medium-finetuned-books3 \
-    --input_file books3_nonmembers.txt \
-    --output_csv books3_nonmember_perf.csv \
-    --max_prompts 400
-
-```
-These steps will generate the `books3_member_perf.csv` and `books3_nonmember_perf.csv` files.
-
-
----
-
-
-### **STEP 5 â€” Build the Random Forest Classifier (Books3 Membership Inference)**
-
-```bash
-python rf_books3_membership.py
-```
-These will generate all the results specified in Phase A in the report.
-
-
-
-
-# PHASE B: GIBBERISH Membership Inference Pipeline 
 This document describes the exact sequence of scripts required to run the Gibberish
 membership-inference experiment.
 
@@ -142,14 +37,14 @@ Ensure Gibberish dataset files are available in the expected paths used by the s
 ## 2. Step-by-Step Execution
 
 
-### **Step 0 ï¿½ Generate Gibberish Dataset**
+### **Step 0 — Generate Gibberish Dataset**
 
 ```bash
 python3 pure_gibberish_data.py
 ```
 This will generate the dataset of 10000 samples. which is present inside the file name "pure_gibberish_noise.jsonl"
 
-### **Step 1 ï¿½ Fine-tune the Model on Gibberish**
+### **Step 1 — Fine-tune the Model on Gibberish**
 
 ```bash
 python3 gpt_2_medium_tuning_gpu.py
@@ -157,7 +52,7 @@ python3 gpt_2_medium_tuning_gpu.py
 This will tune the Gibberish dataset for all 10000 data set for 20 epoches. We will be running on GPU for this one. Initially we were running on CPU which took time. Output folder will be generated "gpt2-medium-finetuned-pure-gibberish"
 ---
 
-### **Step 2 ï¿½ Generating Attack Pairs**
+### **Step 2 — Generating Attack Pairs**
 ```bash
 python3 save_books3_members.py
 ```
@@ -168,7 +63,7 @@ But the Non member is not from pure_gibberish_noise.jsonl file.
 STEP CAN VERIFY MEM AND NON MEM
 
 
-### **STEP 3 ï¿½ Prepare Perf-Ready Prompt Files for Profiling**
+### **STEP 3 — Prepare Perf-Ready Prompt Files for Profiling**
 Now, we can collect perf counters readings for member and non-member data using `collect_performance_books3.py` script
 
 FOR COLLECTING MEMBER PERF DATA
@@ -185,7 +80,7 @@ These steps will generate the `results_members_1000.csv` and `results_non_member
 
 
 
-### **Step 4 ï¿½ Analysis of the perf counters via Histogram plots**
+### **Step 4 — Analysis of the perf counters via Histogram plots**
 ```bash
 python3 analyze_all_metrics_with_stats.py
 ```
@@ -206,7 +101,7 @@ Plotting cycle_activity.stalls_total...
 
 
 
-### **Step 5 ï¿½ Generating the training and testing set for Classifier .**
+### **Step 5 — Generating the training and testing set for Classifier .**
 ```bash
 python3 train_test_split.py
 ```
@@ -221,7 +116,7 @@ Testing set size: 1000
 
 
 
-### **Step 6 ï¿½ Analysis of the XG Boost Classifier by training and testing.**
+### **Step 6 — Analysis of the XG Boost Classifier by training and testing.**
 ```bash
 python3 xg_boost_classifier.py
 ```
@@ -266,3 +161,20 @@ Feature Importances:
   instructions: 0.2678
   cycles: 0.1537
 Saved: xgboost_feature_importance_1k.png
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
